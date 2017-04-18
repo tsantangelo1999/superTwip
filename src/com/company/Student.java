@@ -29,4 +29,25 @@ public class Student implements Comparable<Student>
         else
             return 0;
     }
+
+    public double avgQ1()
+    {
+        double sum = 0;
+        for(double d : gradesQ1)
+            sum += d;
+        return sum / gradesQ1.size();
+    }
+
+    public double avgQ2()
+    {
+        double sum = 0;
+        for(double d : gradesQ2)
+            sum += d;
+        return sum / gradesQ2.size();
+    }
+
+    public double avgGrade()
+    {
+        return avgQ1() + avgQ2();
+    }
 }

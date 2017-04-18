@@ -2,8 +2,10 @@ package com.company;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main
 {
@@ -29,13 +31,27 @@ public class Main
             double q1 = 0;
             q1 += getPoints(sc.next());
             q1 += getPoints(sc.next());
-            q1 -= sc.nextInt() * 0.25;
+            try
+            {
+                q1 -= sc.nextInt() * 0.25;
+            }
+            catch(InputMismatchException e)
+            {
+
+            }
             sc.next(); //skip comments
             double q2 = 0;
             q2 += getPoints(sc.next());
             q2 += getPoints(sc.next());
             q2 += getPoints(sc.next());
-            q2 -= sc.nextInt() * 0.25;
+            try
+            {
+                q2 -= sc.nextInt() * 0.25;
+            }
+            catch(InputMismatchException e)
+            {
+
+            }
             addScores(num, q1, q2);
             sc.nextLine();
         }
@@ -56,24 +72,32 @@ public class Main
             }
             sc2.nextLine();
         }
-
-        
+        Collections.sort(students);
         System.out.println("Name\tSecret Number\tAvg Total Grade\tFR Q1 Grade\tFR Q2 Grade");
         for(Student s : students)
         {
-            System.out.println(s.name + "\t" + s.num + "\t" + );
+            System.out.println(s.name + "\t" + s.num + "\t" + s.avgGrade() + "\t" + s.avgQ1() + "\t" + s.avgQ2());
         }
     }
 
     public static double getPoints(String s) //receives a comma separated score thingy
     {
+        if(s.equals(""))
+            return 0;
         String[] points = s.split(", ");
         double score = 0;
         for(String t : points)
         {
             Scanner find = new Scanner(t);
             find.next(); //skip "+"
-            score += Double.parseDouble(find.next());
+            try
+            {
+                score += Double.parseDouble(find.next());
+            }
+            catch(Exception e)
+            {
+
+            }
         }
         return score;
     }
