@@ -2,10 +2,13 @@ package com.company;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.text.NumberFormat;
 
 public class Main
 {
@@ -13,6 +16,9 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(3);
+        nf.setMinimumFractionDigits(0);
         File grades = new File("rawDataU6.txt");
         Scanner sc = new Scanner(grades);
         sc.useDelimiter("\t");
@@ -55,9 +61,9 @@ public class Main
             addScores(num, q1, q2);
             sc.nextLine();
         }
-        File names = new File("names.txt");
+        File names = new File("namesTest.tsv");
         Scanner sc2 = new Scanner(names);
-        sc2.useDelimiter("\t");
+        sc2.useDelimiter("\t|\r\n");
         while(sc2.hasNextLine())
         {
             String name = sc2.next();
@@ -73,11 +79,27 @@ public class Main
             sc2.nextLine();
         }
         Collections.sort(students);
-        System.out.println("Name\tSecret Number\tAvg Total Grade\tFR Q1 Grade\tFR Q2 Grade");
+        int maxTabs = 1;
         for(Student s : students)
         {
-            System.out.println(s.name + "\t" + s.num + "\t" + s.avgGrade() + "\t" + s.avgQ1() + "\t" + s.avgQ2());
+            if(s.name.length() / 4 > maxTabs)
+                maxTabs = s.name.length() / 4;
         }
+        System.out.println("Name" + getTabs(maxTabs) + "Secret Number\tAvg Total Grade\tFR Q1 Grade\tFR Q2 Grade");
+        for(Student s : students)
+        {
+            System.out.println(s.name + getTabs(maxTabs + 1 - s.name.length() / 4) + s.num + "\t\t\t\t" + nf.format(s.avgGrade()) + "" + getTabs(maxTabs + 1 - nf.format(s.avgGrade()).length()) + "" + nf.format(s.avgQ1()) + "" + getTabs(maxTabs + 1 - nf.format(s.avgGrade()).length()) + "" + nf.format(s.avgQ2()));
+        }
+    }
+
+    public static String getTabs(int i)
+    {
+        String tab = "";
+        for(int j = 0; j < i; j++)
+        {
+            tab += "\t";
+        }
+        return tab;
     }
 
     public static double getPoints(String s) //receives a comma separated score thingy
@@ -110,7 +132,7 @@ public class Main
             {
                 s.gradesQ1.add(q1);
                 s.gradesQ2.add(q2);
-                break;
+                return;
             }
         }
         students.add(new Student(num));
