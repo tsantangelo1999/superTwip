@@ -2,8 +2,6 @@ package com.company;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -61,7 +59,11 @@ public class Main
             addScores(num, q1, q2);
             sc.nextLine();
         }
-        File names = new File("namesTest.tsv");
+        Scanner input = new Scanner(System.in);
+        System.out.println("What is the name of your names file? (Leave out the extension)");
+        String fileName = input.nextLine();
+        System.out.println("");
+        File names = new File(fileName + ".tsv");
         Scanner sc2 = new Scanner(names);
         sc2.useDelimiter("\t|\r\n");
         while(sc2.hasNextLine())
@@ -85,10 +87,26 @@ public class Main
             if(s.name.length() / 4 > maxTabs)
                 maxTabs = s.name.length() / 4;
         }
-        System.out.println("Name" + getTabs(maxTabs) + "Secret Number\tAvg Total Grade\tFR Q1 Grade\tFR Q2 Grade");
+        int maxGraders = 0;
         for(Student s : students)
         {
-            System.out.println(s.name + getTabs(maxTabs + 1 - s.name.length() / 4) + s.num + "\t\t\t\t" + nf.format(s.avgGrade()) + "" + getTabs(maxTabs + 1 - nf.format(s.avgGrade()).length()) + "" + nf.format(s.avgQ1()) + "" + getTabs(maxTabs + 1 - nf.format(s.avgGrade()).length()) + "" + nf.format(s.avgQ2()));
+            if(s.gradesQ1.size() > maxGraders)
+                maxGraders = s.gradesQ1.size();
+        }
+        System.out.print("Name" + getTabs(maxTabs) + "Secret Number\tAvg Total Grade\tAvg FR Q1 Grade\tAvg FR Q2 Grade");
+        for(int i = 1; i <= maxGraders; i++)
+        {
+            System.out.print("\tGrader " + i);
+        }
+        System.out.println("");
+        for(Student s : students)
+        {
+            System.out.print(s.name + getTabs(maxTabs + 1 - s.name.length() / 4) + s.num + "\t\t\t\t" + nf.format(s.avgGrade()) + "/19" + getTabs(4 - (nf.format(s.avgGrade()).length() + 3) / 4) + "" + nf.format(s.avgQ1()) + "/7" + getTabs(4 - (nf.format(s.avgQ1()).length() + 2) / 4) + "" + nf.format(s.avgQ2()) + "/12" + getTabs(4 - (nf.format(s.avgQ2()).length() + 3) / 4));
+            for(int i = 1; i <= s.gradesQ1.size(); i++)
+            {
+                System.out.print(s.gradesQ1.get(i - 1) + s.gradesQ2.get(i - 1) + "/19" + getTabs(3 - (nf.format(s.gradesQ1.get(i - 1) + s.gradesQ2.get(i - 1)).length() + 3) / 4));
+            }
+            System.out.println("");
         }
     }
 
@@ -137,6 +155,6 @@ public class Main
         }
         students.add(new Student(num));
         students.get(students.size() - 1).gradesQ1.add(q1);
-        students.get(students.size() - 1).gradesQ1.add(q2);
+        students.get(students.size() - 1).gradesQ2.add(q2);
     }
 }
