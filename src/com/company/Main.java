@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -59,11 +60,7 @@ public class Main
             addScores(num, q1, q2);
             sc.nextLine();
         }
-        Scanner input = new Scanner(System.in);
-        System.out.println("What is the name of your names file? (Leave out the extension)");
-        String fileName = input.nextLine();
-        System.out.println("");
-        File names = new File(fileName + ".tsv");
+        File names = new File("names.txt");
         Scanner sc2 = new Scanner(names);
         sc2.useDelimiter("\t|\r\n");
         while(sc2.hasNextLine())
