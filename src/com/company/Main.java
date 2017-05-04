@@ -1,7 +1,6 @@
 package com.company;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -17,7 +16,7 @@ public class Main
     {
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(3);
-        nf.setMinimumFractionDigits(0);
+        nf.setMinimumFractionDigits(1);
         File grades = new File("rawDataU6.txt");
         Scanner sc = new Scanner(grades);
         sc.useDelimiter("\t");
@@ -93,7 +92,7 @@ public class Main
         System.out.print("Name" + getTabs(maxTabs) + "Secret Number\tAvg Total Grade\tAvg FR Q1 Grade\tAvg FR Q2 Grade");
         for(int i = 1; i <= maxGraders; i++)
         {
-            System.out.print("\tGrader " + i);
+            System.out.print("\tGrader " + i + " Total\tGrader " + i + " Q1\tGrader " + i + " Q2");
         }
         System.out.println("");
         for(Student s : students)
@@ -101,7 +100,7 @@ public class Main
             System.out.print(s.name + getTabs(maxTabs + 1 - s.name.length() / 4) + s.num + "\t\t\t\t" + nf.format(s.avgGrade()) + "/19" + getTabs(4 - (nf.format(s.avgGrade()).length() + 3) / 4) + "" + nf.format(s.avgQ1()) + "/7" + getTabs(4 - (nf.format(s.avgQ1()).length() + 2) / 4) + "" + nf.format(s.avgQ2()) + "/12" + getTabs(4 - (nf.format(s.avgQ2()).length() + 3) / 4));
             for(int i = 1; i <= s.gradesQ1.size(); i++)
             {
-                System.out.print(s.gradesQ1.get(i - 1) + s.gradesQ2.get(i - 1) + "/19" + getTabs(3 - (nf.format(s.gradesQ1.get(i - 1) + s.gradesQ2.get(i - 1)).length() + 3) / 4));
+                System.out.print(s.gradesQ1.get(i - 1) + s.gradesQ2.get(i - 1) + "/19" + getTabs(4 - (nf.format(s.gradesQ1.get(i - 1) + s.gradesQ2.get(i - 1)).length() + 3) / 4) + s.gradesQ1.get(i - 1) + "/7" + getTabs(3 - (nf.format(s.gradesQ1.get(i - 1)).length() + 2) / 4) + s.gradesQ2.get(i - 1) + "/12" + getTabs(3 - (nf.format(s.gradesQ2.get(i - 1)).length() + 3) / 4));
             }
             System.out.println("");
         }
