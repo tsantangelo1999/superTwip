@@ -74,7 +74,8 @@ public class Main
                     break;
                 }
             }
-            sc2.nextLine();
+            if(sc2.hasNextLine())
+                sc2.nextLine();
         }
         Collections.sort(students);
         int maxTabs = 1;
