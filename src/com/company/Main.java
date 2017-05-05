@@ -61,7 +61,7 @@ public class Main
         }
         File names = new File("names.txt");
         Scanner sc2 = new Scanner(names);
-        sc2.useDelimiter("\t|\r\n");
+        sc2.useDelimiter("\t|\r\n|\r|\n");
         while(sc2.hasNextLine())
         {
             String name = sc2.next();
