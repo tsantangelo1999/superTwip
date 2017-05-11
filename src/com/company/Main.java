@@ -37,7 +37,7 @@ public class Main
             q1 += getPoints(sc.next());
             try
             {
-                q1 -= sc.nextInt() * 0.25;
+                q1 -= sc.nextDouble() * 0.25;
             }
             catch(InputMismatchException e)
             {
@@ -50,7 +50,7 @@ public class Main
             q2 += getPoints(sc.next());
             try
             {
-                q2 -= sc.nextInt() * 0.25;
+                q2 -= sc.nextDouble() * 0.25;
             }
             catch(InputMismatchException e)
             {

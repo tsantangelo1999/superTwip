@@ -22,12 +22,21 @@ public class Student implements Comparable<Student>
 
     public int compareTo(Student s)
     {
+        //sort by name
         if(this.name.compareTo(s.name) > 0)
             return 1;
         else if(this.name.compareTo(s.name) < 0)
             return -1;
         else
             return 0;
+
+        //sort by number
+        /*if(this.num > s.num)
+            return 1;
+        else if(this.num < s.num)
+            return -1;
+        else
+            return 0;*/
     }
 
     public double avgQ1()
